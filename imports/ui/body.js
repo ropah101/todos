@@ -6,6 +6,7 @@ import './task.js';
 
 import './body.html';
 
+
 Template.body.onCreated(function bodyOnCreated() {
   this.state = new ReactiveDict();
 });
@@ -20,8 +21,13 @@ Template.body.helpers({
     // Otherwise, return all of the tasks
     return Tasks.find({});
   },
+  incompleteCount() {
+    return Tasks.find({ checked: { $ne: true } }).count();
+},
 });
-Template.body.events({
+
+
+    Template.body.events({
   'submit .new-task'(event) {
     // Prevent default browser form submit
     event.preventDefault();
@@ -40,6 +46,11 @@ Template.body.events({
     target.text.value = '';
   },
   'change .hide-completed input'(event, instance) {
+    instance.state.set('hideCompleted', event.target.checked);
+  },
+
+  'change .hide-completed input'(event, instance) {
+    console.log('i got here');
     instance.state.set('hideCompleted', event.target.checked);
   },
 });
