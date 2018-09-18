@@ -11,6 +11,7 @@ import './body.html';
 Template.body.onCreated(function bodyOnCreated() {
   this.state = new ReactiveDict();
 });
+Meteor.subscribe('tasks');
 
 Template.body.helpers({
   tasks() {
@@ -37,7 +38,9 @@ Template.body.helpers({
     const target = event.target;
     const text = target.text.value;
 
+
     // Insert a task into the collection
+    Meteor.call('tasks.insert', text);
     Tasks.insert({
       text,
       createdAt: new Date(), // current time
