@@ -29,6 +29,7 @@ Meteor.methods({
       username: Meteor.user().username
     });
   },
+
   "tasks.remove"(taskId) {
     check(taskId, String);
     const task = Tasks.findOne(taskId);
